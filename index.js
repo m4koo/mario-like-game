@@ -60,11 +60,11 @@ const player = new Player ()
 const platforms = [
     new Platform({
         x: 200,
-        y: 100
+        y: 500
     }), 
     new Platform({
         x: 500, 
-        y: 200
+        y: 700
     })
     ]
 
@@ -106,7 +106,7 @@ function animate () {
     } 
 
     // platform collision detection
-    platform.forEach((platform) => {
+    platforms.forEach((platform) => {
         if (player.position.y + player.height <= platform.position.y && player.position.y + player.height + player.velocity.y >= platform.position.y
             && player.position.x + player.width >= platform.position.x && player.position.x <= platform.position.x + platform.width){
             player.velocity.y = 0
