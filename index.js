@@ -36,7 +36,7 @@ class Player {
 }
 
 class Platform {
-    constructor({ x, y }) { //x wird in der console als undefiniert angezeigt #FIX_IT
+    constructor({x, y} ) { //x wird in der console als undefiniert angezeigt #FIX_IT
         this.position = {
             x,
             y
@@ -56,7 +56,7 @@ const gravity = 1.5
 const player = new Player ()
 
 // PLATFORMS
-const platform = new Platform()
+
 const platforms = [
     new Platform({
         x: 200,
