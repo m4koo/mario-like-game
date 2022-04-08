@@ -36,12 +36,11 @@ class Player {
 }
 
 class Platform {
-    constructor({x, y} ) { //x wird in der console als undefiniert angezeigt #FIX_IT
+    constructor({x, y} ) { 
         this.position = {
             x,
             y
         }
-
         this.width = 200
         this.height = 20
     }
@@ -52,12 +51,12 @@ class Platform {
     }
 }
 
-const gravity = 1.5
+const gravity = 2
 const player = new Player ()
 
 // PLATFORMS
 
-const platforms = [
+const platforms = [ //array to add new platforms
     new Platform({
         x: 200,
         y: 500
@@ -86,21 +85,21 @@ function animate () {
     })
     
 
-    // move right-left
-    if (keys.right.pressed && player.position.x < 700) {
+    // move right-left && Background scroll
+    if (keys.right.pressed && player.position.x < 650) { //player.position.x < num = right border which the player can move and after that it is scrolling the background
         player.velocity.x = 5
-    } else if (keys.left.pressed && player.position.x > 100){
+    } else if (keys.left.pressed && player.position.x > 100){ //same as above, just the left border
         player.velocity.x = -5
     }else {
         player.velocity.x = 0
 
-        if (keys.right.pressed){
+        if (keys.right.pressed){ 
             platforms.forEach(platform => {
-                platform.position.x -= 5
+                platform.position.x -= 5        //movementspeed to right
             })
         }    else if (keys.left.pressed) {
             platforms.forEach(platform => {
-                platform.position.x += 5
+                platform.position.x += 5        //movementspeed to left
             })
         }
     } 
@@ -115,7 +114,7 @@ function animate () {
 }
 animate()
 
-// Event listener (keydown = taste gedrückt) (keyup = taste losgelassen)
+// Event listener (keydown = key pressed) (keyup = key released)
 window.addEventListener('keydown', ({keyCode}) => {
     //console.log(keyCode)
     switch (keyCode) {
