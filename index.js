@@ -148,16 +148,16 @@ function animate () {
 
         if (keys.right.pressed){ 
             scrollOffset += 5
-
             platforms.forEach(platform => {
                 platform.position.x -= 5        //movementspeed to right
             })
+            genericObject.forEach(genericObject => genericObject.position.x -= 3) //background swipes left when moving right
         }else if (keys.left.pressed) {
             scrollOffset -= 5
-
             platforms.forEach(platform => {
                 platform.position.x += 5        //movementspeed to left
             })
+            genericObject.forEach(genericObject => genericObject.position.x += 3)
         }
     } 
 
