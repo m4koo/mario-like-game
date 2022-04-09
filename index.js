@@ -44,9 +44,7 @@ class Platform {
         }
         this.image = image
         this.width = image.width
-        this.height = image.height
-
-        
+        this.height = image.height   
     }
 
     draw() {
@@ -54,14 +52,35 @@ class Platform {
     }
 }
 
-const platformImg = new Image()
-platformImg.src = "/img/platform.png"
+class GenericObject {
+    constructor({x, y, image} ) { 
+        this.position = {
+            x,
+            y
+        }
+        this.image = image
+        this.width = image.width
+        this.height = image.height 
+    }
+
+    draw() {
+        c.drawImage(this.image, this.position.x, this.position.y)
+    }
+}
+
+function createImage(imageSrc){
+    const image = new Image()
+    image.src = imageSrc
+    return image
+}
+const platformImg = createImage("/img/platform.png")
+const background = createImage("/img/background.png")
+const hills = createImage("/img/hills.png")
 
 const gravity = 2
 const player = new Player ()
 
 // PLATFORMS
-
 const platforms = [ //array to add new platforms
     new Platform({
         x: -1,
@@ -73,7 +92,24 @@ const platforms = [ //array to add new platforms
         y: 600,
         image: platformImg
     })
-    ]
+]
+
+// GENERIC/DECORATIVE OBJECTS
+
+
+
+const genericObject = [
+    new GenericObject({
+        x: -1,
+        y: -1,
+        image: background 
+    }),
+    new GenericObject({
+        x: -1,
+        y: 135,
+        image: hills
+    })
+]
 
 const keys = {
     right: {
@@ -86,11 +122,17 @@ const keys = {
 
 let scrollOffset = 0
 
+
+// ON_SCREEN
 function animate () {
     requestAnimationFrame(animate)
     c.fillStyle = "white"
     c.fillRect(0, 0, canvas.width, canvas.height)
     
+    genericObject.forEach(genericObject => {
+        genericObject.draw()
+    })
+
     platforms.forEach(platform => {
         platform.draw()
     })
