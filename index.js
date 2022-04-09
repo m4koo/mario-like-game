@@ -5,6 +5,14 @@ const c = canvas.getContext('2d')
 canvas.width = 1280
 canvas.height = 720
 
+// import images
+let platformImg = createImage("/img/platform.png")
+let background = createImage("/img/background.png")
+let hills = createImage("/img/hills.png")
+
+const gravity = 2
+
+
 
 class Player {
     constructor(){
@@ -31,8 +39,7 @@ class Player {
         this.position.y += this.velocity.y
 
         if (this.position.y + this.height + this.velocity.y <= canvas.height)
-            this.velocity.y += gravity
-        else this.velocity.y = 0
+            this.velocity.y += gravity   
     }
 }
 
@@ -73,15 +80,11 @@ function createImage(imageSrc){
     image.src = imageSrc
     return image
 }
-const platformImg = createImage("/img/platform.png")
-const background = createImage("/img/background.png")
-const hills = createImage("/img/hills.png")
 
-const gravity = 2
-const player = new Player ()
+let player = new Player ()
 
 // PLATFORMS
-const platforms = [ //array to add new platforms
+let platforms = [ //array to add new platforms
     new Platform({
         x: -1,
         y: 600,
@@ -91,14 +94,16 @@ const platforms = [ //array to add new platforms
         x: platformImg.width -3, 
         y: 600,
         image: platformImg
+    }),
+    new Platform({
+        x: platformImg.width * 2 + 150, 
+        y: 600,
+        image: platformImg
     })
 ]
 
 // GENERIC/DECORATIVE OBJECTS
-
-
-
-const genericObject = [
+let genericObject = [
     new GenericObject({
         x: -1,
         y: -1,
@@ -119,9 +124,47 @@ const keys = {
         pressed: false
     }
 }
-
 let scrollOffset = 0
 
+function init(){
+
+    player = new Player ()
+
+    // PLATFORMS
+    platforms = [ //array to add new platforms
+        new Platform({
+            x: -1,
+            y: 600,
+            image: platformImg
+        }), 
+        new Platform({
+            x: platformImg.width -3, 
+            y: 600,
+            image: platformImg
+        }),
+        new Platform({
+            x: platformImg.width * 2 + 150, 
+            y: 600,
+            image: platformImg
+        })
+    ]
+
+    // GENERIC/DECORATIVE OBJECTS
+    genericObject = [
+        new GenericObject({
+            x: -1,
+            y: -1,
+            image: background 
+        }),
+        new GenericObject({
+            x: -1,
+            y: 135,
+            image: hills
+        })
+    ]
+
+    scrollOffset = 0
+}
 
 // ON_SCREEN
 function animate () {
@@ -171,8 +214,14 @@ function animate () {
         }
     })
 
+    // win condition
     if (scrollOffset > 2000){
         console.log("You Win")
+    }
+
+    // lose condition
+    if(player.position.y > canvas.height){
+        init()
     }
 }
 animate()
