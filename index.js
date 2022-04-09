@@ -1,8 +1,9 @@
+
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 
-canvas.width = window.innerWidth
-canvas.height = window.innerHeight
+canvas.width = 1280
+canvas.height = 720
 
 
 class Player {
@@ -36,20 +37,25 @@ class Player {
 }
 
 class Platform {
-    constructor({x, y} ) { 
+    constructor({x, y, image} ) { 
         this.position = {
             x,
             y
         }
-        this.width = 200
-        this.height = 20
+        this.image = image
+        this.width = image.width
+        this.height = image.height
+
+        
     }
 
     draw() {
-        c.fillStyle ='blue'
-        c.fillRect(this.position.x, this.position.y, this.width, this.height)
+        c.drawImage(this.image, this.position.x, this.position.y)
     }
 }
+
+const platformImg = new Image()
+platformImg.src = "/img/platform.png"
 
 const gravity = 2
 const player = new Player ()
@@ -58,12 +64,14 @@ const player = new Player ()
 
 const platforms = [ //array to add new platforms
     new Platform({
-        x: 200,
-        y: 500
+        x: -1,
+        y: 600,
+        image: platformImg
     }), 
     new Platform({
-        x: 500, 
-        y: 700
+        x: platformImg.width -3, 
+        y: 600,
+        image: platformImg
     })
     ]
 
@@ -80,15 +88,16 @@ let scrollOffset = 0
 
 function animate () {
     requestAnimationFrame(animate)
-    c.clearRect(0, 0, canvas.width, canvas.height)
-    player.update()
+    c.fillStyle = "white"
+    c.fillRect(0, 0, canvas.width, canvas.height)
+    
     platforms.forEach(platform => {
         platform.draw()
     })
-    
+    player.update()
 
     // move right-left && Background scroll
-    if (keys.right.pressed && player.position.x < 650) { //player.position.x < num = right border which the player can move and after that it is scrolling the background
+    if (keys.right.pressed && player.position.x < 400) { //player.position.x < num = right border which the player can move and after that it is scrolling the background
         player.velocity.x = 5
     } else if (keys.left.pressed && player.position.x > 100){ //same as above, just the left border
         player.velocity.x = -5
