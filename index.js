@@ -174,7 +174,7 @@ function animate () {
     // move right-left && Background scroll
     if (keys.right.pressed && player.position.x < 400) { //player.position.x < num = right border which the player can move and after that it is scrolling the background
         player.velocity.x = player.speed
-    } else if (keys.left.pressed && player.position.x > 100){ //same as above, just the left border
+    } else if ((keys.left.pressed && player.position.x > 100) || (keys.left.pressed && scrollOffset === 0 && player.position.x > 0)){ //same as above, just the left border
         player.velocity.x = -player.speed
     }else {
         player.velocity.x = 0
@@ -185,7 +185,7 @@ function animate () {
                 platform.position.x -= player.speed        //movementspeed to right
             })
             genericObject.forEach(genericObject => genericObject.position.x -= player.speed * 0.66) //background swipes left when moving right
-        }else if (keys.left.pressed) {
+        }else if (keys.left.pressed && scrollOffset > 0) {
             scrollOffset -= player.speed
             platforms.forEach(platform => {
                 platform.position.x += player.speed       //movementspeed to left
