@@ -303,7 +303,6 @@ window.addEventListener('keydown', ({keyCode}) => {
             if (player.velocity.y === 0) {
                 player.velocity.y -= player.jump
             }
-            
             break
 
         case 83:
