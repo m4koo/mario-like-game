@@ -16,6 +16,7 @@ let spriteRunRight = createImage("/img/spriteRunRight.png")
 let spriteStandLeft = createImage("/img/spriteStandLeft.png")
 let spriteStandRight = createImage("/img/spriteStandRight.png")
 console.log("test");
+console.log("test3");
 
 class Player {
     constructor(){
